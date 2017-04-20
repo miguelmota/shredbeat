@@ -1,6 +1,8 @@
 var playButton = document.querySelector('#play');
 var stopButton = document.querySelector('#stop');
 
+var shredProgressFill = document.querySelector('#shredProgressFill');
+
 var isPlaying = false;
 
 function play() {
@@ -23,6 +25,7 @@ var keyup$ = Rx.Observable.fromEvent(document, 'keyup');
 
 var volumeRange = [0.1, 1];
 var scale = LinearScale([500, 1000], playbackRange);
+var progressScale = LinearScale([0.75, 3], [0, 100]);
 var volumeScale = LinearScale([500, 1000], volumeRange);
 
 var rate = playbackRange[0];
@@ -74,6 +77,8 @@ setInterval(() => {
   if (!isPlaying) return false;
 
   currentRate += (0.001 * i);
+
+  shredProgressFill.style.width = `${progressScale(currentRate)}%`;
 
   if (currentRate >= playbackRange[1]) {
     currentRate = playbackRange[1];
