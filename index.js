@@ -210,7 +210,7 @@ if (cachedPlaylistUrl) {
 
 function setRandBg() {
   const rand = getRandomInt(1, 16);
-  document.body.style.backgroundImage = `url(/gifs/${rand}.gif)`;
+  document.body.style.backgroundImage = `url(../gifs/${rand}.gif)`;
 }
 
 setRandBg();
