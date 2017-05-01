@@ -1,24 +1,20 @@
 <!DOCTYPE html>
-<html lang="en-US">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=yes">
-  <title>SHREDBEAT</title>
-  <link href="https://fonts.googleapis.com/css?family=Bangers" rel="stylesheet">
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-  <h1>SHREDBEAT<h1>
-  <button id="play">play</button>
-  <button id="stop">stop</button>
+<html>
+  <head>
+    <script>window.location.href = 'example/';</script>
+    <meta charset="UTF-8">
+    <title>Hello World!</title>
+  </head>
+  <body>
+    <h1>Hello World!</h1>
+    <!-- All of the Node.js APIs are available in this renderer process. -->
+    We are using Node.js <script>document.write(process.versions.node)</script>,
+    Chromium <script>document.write(process.versions.chrome)</script>,
+    and Electron <script>document.write(process.versions.electron)</script>.
+  </body>
 
-  <h2>SHREDMETER<h2>
-  <div id="shredProgress">
-    <div id="shredProgressFill"></div>
-  </div>
-
- <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/5.3.0/Rx.min.js"></script>
- <script src="linear-scale.js"></script>
- <script src="index.js"></script>
-</body>
+  <script>
+    // You can also require other files to run in this process
+    require('./renderer.js')
+  </script>
 </html>
