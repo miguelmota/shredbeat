@@ -149,7 +149,7 @@ function handleTrackResponse(response) {
 }
 
 function getPlaylist(url) {
-  return fetch(`http://api.soundcloud.com/resolve?url=${url}&${clientIdParam}`)
+  return fetch(`https://api.soundcloud.com/resolve?url=${url}&${clientIdParam}`)
   .then(response => response.json())
   .then(json => {
   console.log(json)
