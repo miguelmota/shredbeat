@@ -1,0 +1,40 @@
+body {
+  background-color: #fff;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  background-attachment: fixed;
+  color: #fff;
+}
+h1 {
+  font-family: 'colors_of_autumnregular', cursive;
+  font-size: 80px;
+  margin: 0;
+  color: #1bf4ff;
+  text-shadow: 2px 4px #c100ff;
+}
+h2 {
+  font-family: 'sf_alien_encountersitalic', cursive;
+  font-size: 60px;
+  margin: 0;
+  color: #bf65ff;
+  text-shadow: 2px 4px #6e00ff;
+}
+
+#shredProgress {
+  width: 100%;
+  height: 50px;
+/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#00a5ff+1,00a5ff+1,0061ff+10,6f00f7+22,a400f7+40,ea32ff+56,ea32ff+72,ff3292+85,ff0004+92 */
+background: #00a5ff; /* Old browsers */
+background: -moz-linear-gradient(left, #00a5ff 1%, #00a5ff 1%, #0061ff 10%, #6f00f7 22%, #a400f7 40%, #ea32ff 56%, #ea32ff 72%, #ff3292 85%, #ff0004 92%); /* FF3.6-15 */
+background: -webkit-linear-gradient(left, #00a5ff 1%,#00a5ff 1%,#0061ff 10%,#6f00f7 22%,#a400f7 40%,#ea32ff 56%,#ea32ff 72%,#ff3292 85%,#ff0004 92%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to right, #00a5ff 1%,#00a5ff 1%,#0061ff 10%,#6f00f7 22%,#a400f7 40%,#ea32ff 56%,#ea32ff 72%,#ff3292 85%,#ff0004 92%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00a5ff', endColorstr='#ff0004',GradientType=1 ); /* IE6-9 */
+}
+
+#shredProgressFill {
+  width: 100%;
+  height: 100%;
+  background: #000;
+  float: right;
+}

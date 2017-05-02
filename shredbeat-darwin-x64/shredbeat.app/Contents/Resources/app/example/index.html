@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=yes">
+  <title>SHREDBEAT</title>
+  <link href="https://fonts.googleapis.com/css?family=Bangers" rel="stylesheet">
+  <link rel="stylesheet" href="../fonts/streamster/stylesheet.css" />
+  <link rel="stylesheet" href="../fonts/sfalienc/stylesheet.css" />
+  <link rel="stylesheet" href="../fonts/colorsofautumn/stylesheet.css" />
+  <link rel="stylesheet" href="../styles/style.css" />
+</head>
+<body>
+  <h1>SHREDBEAT<h1>
+  <form>
+    <input type="text" id="soundcloudUrl" placeholder="Soundcloud Playlist Url" />
+    <button id="soundcloudUrlSubmit">Set</button>
+  </form>
+  <button id="play">play</button>
+  <button id="stop">stop</button>
+
+  <h2>SHREDOMETER<h2>
+  <div id="shredProgress">
+    <div id="shredProgressFill"></div>
+  </div>
+
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/5.3.0/Rx.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.8.0/d3.min.js"></script>
+ <script src="../linear-scale.js"></script>
+ <script src="../index.js"></script>
+</body>
+</html>

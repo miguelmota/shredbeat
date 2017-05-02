@@ -4,6 +4,14 @@
 
 <img src="https://github.com/miguelmota/shredbeat/blob/master/screenshot.png?raw=true" width="400">
 
+## Development
+
+install
+
+```bash
+npm install
+```
+
 start
 
 ```bash
