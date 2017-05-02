@@ -1,22 +1,37 @@
 {
-  "name": "electron-quick-start",
-  "version": "1.0.0",
-  "description": "A minimal Electron application",
+  "name": "shredbeat",
+  "version": "0.0.1",
+  "description": "Music beat reacts to your keyboard shredding speed",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "start:dev": "NODE_ENV=development electron .",
+    "watch": "watchify ./lib/browser.js -o ./dist/browser.js",
+    "build": "echo todo"
   },
-  "repository": "https://github.com/electron/electron-quick-start",
+  "repository": "https://github.com/miguelmota/shredbeat",
   "keywords": [
-    "Electron",
-    "quick",
-    "start",
-    "tutorial",
-    "demo"
+    "shred",
+    "beat",
+    "electron",
+    "bpm",
+    "keyboard",
+    "music",
+    "audio"
   ],
-  "author": "GitHub",
-  "license": "CC0-1.0",
+  "author": "Miguel Mota",
+  "license": "MIT",
   "devDependencies": {
-    "electron": "~1.6.2"
+    "browserify": "^14.3.0",
+    "electron": "^1.6.6",
+    "watchify": "^3.9.0"
+  },
+  "dependencies": {
+    "d3": "^4.8.0",
+    "lodash": "^4.17.4",
+    "menubar": "^5.2.3",
+    "nedb": "^1.8.0",
+    "osx-global-keypress": "0.0.7",
+    "rxjs": "^5.3.0"
   }
 }
