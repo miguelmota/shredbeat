@@ -2,7 +2,7 @@
 
 > Music beat reacts to your keyboard shredding speed
 
-<img src="screenshot" width="600">
+<img src="https://github.com/miguelmota/shredbeat/blob/master/screenshot.png?raw=true" width="600">
 
 start
 
