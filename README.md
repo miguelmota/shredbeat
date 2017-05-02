@@ -4,6 +4,8 @@
 
 <img src="https://github.com/miguelmota/shredbeat/blob/master/screenshot.png?raw=true" width="400">
 
+NOTE: this is a dirty MVP. Currenly only works in Mac OS X, and only supports SoundCloud.
+
 ## Development
 
 install
