@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>SHREDBEAT</title>
+    <link rel="stylesheet" href="./assets/fonts/streamster/stylesheet.css" />
+    <link rel="stylesheet" href="./assets/fonts/sfalienc/stylesheet.css" />
+    <link rel="stylesheet" href="./assets/fonts/colorsofautumn/stylesheet.css" />
+    <link rel="stylesheet" href="./assets/styles/style.css" />
+  </head>
+  <body>
+  <h1>SHREDBEAT<h1>
+  <form>
+    <input type="text" id="soundcloudUrl" placeholder="Soundcloud Playlist Url" />
+    <button id="soundcloudUrlSubmit">Set</button>
+    <div id="controls">
+      <button id="play" disabled>play</button>
+      <button id="stop" disabled>stop</button>
+    </div>
+  </form>
+
+  <h2>SHREDOMETER<h2>
+  <div id="shredProgress">
+    <div id="shredProgressFill"></div>
+  </div>
+
+  <script>
+    // You can also require other files to run in this process
+    require('./renderer.js')
+    const ipcRenderer = require('electron').ipcRenderer
+
+    window.shredbeat = {
+      osGlobalKeyPress: function(callback) {
+        ipcRenderer.on('keypress', (event, message) => {
+          console.log(message)
+          callback(message);
+        })
+      }
+    }
+
+    require('./lib/browser.js')
+  </script>
+
+  </body>
+</html>
