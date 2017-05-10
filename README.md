@@ -4,11 +4,7 @@
 
 <img src="https://github.com/miguelmota/shredbeat/blob/master/screenshot.png?raw=true" width="400">
 
-<<<<<<< HEAD
 NOTE: this is an early MVP. Currenly only works in Mac OS X, and only supports [SoundCloud](https://soundcloud.com).
-=======
-NOTE: this is a dirty MVP. Currenly only works in Mac OS X, and only supports SoundCloud.
->>>>>>> 33d444f8b2452c7bbb294f3fa29e7d10c59fa54b
 
 ## Development
 
