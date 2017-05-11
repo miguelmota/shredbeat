@@ -10,7 +10,14 @@ const opts = {
   electronVersion: '1.6.6',
   icon: './designAssets/shredbeat.icns',
   overwrite: true,
-  out: './build/'
+  out: './build/',
+  ignore: [
+    /designAssets/,
+    /build.js/,
+    /LICENSE.md/,
+    /README.md/,
+    /screenshot.png/
+  ]
 };
 
 packager(opts, function done(err, appPath) {

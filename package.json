@@ -6,7 +6,6 @@
   "scripts": {
     "start": "electron .",
     "start:dev": "NODE_ENV=development electron .",
-    "watch": "watchify ./lib/browser.js -o ./dist/browser.js",
     "build": "node build.js",
     "relink": "npm unlink global-keypress && npm link global-keypress"
   },
