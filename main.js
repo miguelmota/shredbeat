@@ -7,8 +7,6 @@ const defaultMenu = require('electron-default-menu')
 var debug = require('./lib/debug')
 var keyPressLogger = require('./lib/keyPressLogger')
 
-var debug = require('./lib/debug')
-
 var globalShortcut = electron.globalShortcut
 
 // Module to control application life.
@@ -38,6 +36,8 @@ var mb = menubar({
 })
 
 mb.on('ready', function ready () {
+  debug('app ready')
+
   var windowShortcutKey = 'Command+S';
   var ret = globalShortcut.register(windowShortcutKey, () => {
     debug(windowShortcutKey, 'is pressed')
@@ -52,6 +52,7 @@ mb.on('ready', function ready () {
   var menu = defaultMenu(app, shell)
 
   Menu.setApplicationMenu(Menu.buildFromTemplate(menu))
+  debug('menu set')
 
   // make sure this is at bottom of this function
   keyPressLogger.start({
