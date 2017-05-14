@@ -31,7 +31,7 @@
     "d3": "^4.8.0",
     "electron": "^1.6.6",
     "electron-default-menu": "^1.0.1",
-    "global-keypress": "0.0.4",
+    "global-keypress": "0.0.5",
     "lodash": "^4.17.4",
     "menubar": "^5.2.3",
     "nedb": "^1.8.0",

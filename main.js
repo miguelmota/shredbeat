@@ -21,6 +21,8 @@ var shell = electron.shell
 // be closed automatically when the JavaScript object is garbage collected.
 var mainWindow
 
+var isLinux = /linux/gi.test(process.platform)
+
 var mb = menubar({
   icon: __dirname + '/IconTemplate.png',
   dir: __dirname,
@@ -35,7 +37,7 @@ var mb = menubar({
   darkTheme: true
 })
 
-mb.on('ready', function ready () {
+function onReady() {
   debug('app ready')
 
   var windowShortcutKey = 'Command+S';
@@ -57,17 +59,28 @@ mb.on('ready', function ready () {
   // make sure this is at bottom of this function
   keyPressLogger.start({
     onPress: (data) => {
-      mb.window.webContents.send('keypress', true)
+      if (isLinux) {
+        mainWindow.webContents.send('keypress', true)
+      } else {
+        mb.window.webContents.send('keypress', true)
+      }
     }
   })
-})
+}
+
+// menubar doesn't work on linux,
+// showing regular window for linux
+if (!isLinux) {
+  mb.on('ready', onReady)
+}
 
 function createWindow () {
   // Create the browser window.
   mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
-    show: false
+    icon: __dirname + '/IconTemplate.png',
+    show: isLinux
   })
 
   // and load the index.html of the app.
@@ -91,6 +104,10 @@ function createWindow () {
     // when you should delete the corresponding element.
     mainWindow = null
   })
+
+  if (isLinux) {
+    onReady()
+  }
 }
 
 // This method will be called when Electron has finished
