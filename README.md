@@ -1,10 +1,12 @@
 # shredbeat
 
-> Music beat reacts to your keyboard shredding speed
+> Music beat reacts to keyboard shredding speed
 
 <img src="https://github.com/miguelmota/shredbeat/blob/master/screenshot.png?raw=true" width="400">
 
 NOTE: this is an early MVP. Currenly only works in Mac OS X and Linux, and only supports [SoundCloud](https://soundcloud.com).
+
+[https://shredbeat.com](https://shredbeat.com)
 
 ## Development
 
