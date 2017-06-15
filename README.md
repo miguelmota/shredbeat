@@ -4,9 +4,13 @@
 
 <img src="https://github.com/miguelmota/shredbeat/blob/master/screenshot.png?raw=true" width="400">
 
-NOTE: this is an early MVP. Currenly only works in Mac OS X and Linux, and only supports [SoundCloud](https://soundcloud.com).
-
 [https://shredbeat.com](https://shredbeat.com)
+
+## Supported platforms
+
+Supports Mac OS X and Linux.
+
+Works with [SoundCloud](https://soundcloud.com), [Hype Machine](http://hypem.com/), [Mixcloud](https://www.mixcloud.com/), and [Fanburst](https://fanburst.com/) playlist urls.
 
 ## Development
 
