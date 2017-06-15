@@ -16,7 +16,7 @@ Works with [SoundCloud](https://soundcloud.com), [Hype Machine](http://hypem.com
 
 ## How it works
 
-It listens to system wide [global keypress](https://github.com/miguelmota/global-keypress) events to determine how fast you're typing. The faster you type, the faster and louder the music will play.
+Shredbeat listens to system wide [global keypress](https://github.com/miguelmota/global-keypress) events to determine how fast you're typing. The faster you type, the faster and louder the music will play.
 
 ## Development
 
