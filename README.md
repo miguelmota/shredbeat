@@ -6,6 +6,8 @@
 
 [https://shredbeat.com](https://shredbeat.com)
 
+Note: this is an MVP
+
 ## Supported platforms
 
 Supports Mac OS X and Linux.
