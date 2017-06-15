@@ -40,7 +40,19 @@ npm run watch
 
 ## Releases
 
+Build release for each platform
+
+```bash
+npm run build
+```
+
+Download stable release for Mac OS X
+
+[https://shredbeat.com/releases/shredbeat.zip](https://shredbeat.com/releases/shredbeat.zip)
+
+<~--
 Go to [Releases](https://github.com/miguelmota/shredbeat/releases) page to download latest build.
+-->
 
 ## Resources
 
