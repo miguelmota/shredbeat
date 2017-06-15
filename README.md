@@ -1,6 +1,6 @@
 # shredbeat
 
-> Music beat reacts to keyboard shredding speed
+> Music beat reacts to [keyboard shredding](https://www.urbandictionary.com/define.php?term=keyboard%20shredding) speed.
 
 <img src="https://github.com/miguelmota/shredbeat/blob/master/screenshot.png?raw=true" width="400">
 
@@ -13,6 +13,10 @@ Note: this is an MVP
 Supports Mac OS X and Linux.
 
 Works with [SoundCloud](https://soundcloud.com), [Hype Machine](http://hypem.com/), [Mixcloud](https://www.mixcloud.com/), and [Fanburst](https://fanburst.com/) playlist urls.
+
+## How it works
+
+It listens to system wide [global keypress](https://github.com/miguelmota/global-keypress) events to determine how fast you're typing. The faster you type, the faster and louder the music will play.
 
 ## Development
 
