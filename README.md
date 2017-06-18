@@ -12,7 +12,7 @@ Note: this is an MVP
 
 Supports Mac OS X and Linux.
 
-Works with [SoundCloud](https://soundcloud.com), [Hype Machine](http://hypem.com/), [Mixcloud](https://www.mixcloud.com/), and [Fanburst](https://fanburst.com/) playlist urls.
+Works with [YouTube](https://www.youtube.com/), [SoundCloud](https://soundcloud.com), [Hype Machine](http://hypem.com/), [Mixcloud](https://www.mixcloud.com/), and [Fanburst](https://fanburst.com/) playlist urls.
 
 ## How it works
 
