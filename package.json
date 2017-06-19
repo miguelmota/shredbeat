@@ -31,6 +31,7 @@
     "audio-director": "0.0.4",
     "d3": "^4.8.0",
     "electron": "^1.6.6",
+    "electron-context-menu": "^0.9.1",
     "electron-default-menu": "^1.0.1",
     "fanburst-audio": "0.0.1",
     "global-keypress": "0.0.8",

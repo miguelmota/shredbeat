@@ -28,7 +28,7 @@ var mb = menubar({
   dir: __dirname,
   index: 'file://' + __dirname + '/index.html',
   width: 500,
-  height: 300,
+  height: 310,
   alwaysOnTop: true,
   preloadWindow: true,
   nodeIntegration: true,
@@ -36,6 +36,14 @@ var mb = menubar({
   transparent: true,
   darkTheme: true
 })
+
+// right click menu
+require('electron-context-menu')({
+  prepend: (params, browserWindow) => [{
+    label: 'Shredbeat',
+    showInspectElement: false
+  }]
+});
 
 function onReady() {
   debug('app ready')

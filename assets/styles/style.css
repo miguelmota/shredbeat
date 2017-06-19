@@ -3,6 +3,34 @@
   padding: 0;
   margin: 0;
 }
+
+body::-webkit-scrollbar,
+.overflow-x::-webkit-scrollbar,
+.overflow-y::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+body::-webkit-scrollbar-track,
+.overflow-x::-webkit-scrollbar-track,
+.overflow-y::-webkit-scrollbar-track {
+  background: #000;
+}
+
+body::-webkit-scrollbar-thumb,
+.overflow-x::-webkit-scrollbar-thumb,
+.overflow-y::-webkit-scrollbar-thumb {
+  background-color: rgba(73, 65, 88, 0.7);
+  border: 1px solid rgba(49, 49, 49, 0.6);
+}
+
+body::-webkit-scrollbar-thumb:hover,
+.overflow-x::-webkit-scrollbar-thumb:hover,
+.overflow-y::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(100, 100, 100, 0.7);
+}
+
+
 body {
   background-color: #fff;
   background-repeat: no-repeat;
@@ -84,4 +112,21 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00a5ff', end
   height: 100%;
   background: #000;
   float: right;
+}
+
+#bottom {
+  text-align: right;
+}
+
+#quit {
+  font-size: 12px;
+  font-family: Helvetica, ariel, sans-serif;
+  color: rgba(255, 255, 255, 0.4);
+  text-shadow: none;
+  font-weight: normal;
+  cursor: pointer;
+  transition: all 0.2s ease-out;
+}
+#quit:hover {
+  color: rgba(255, 255, 255, 0.6);
 }
