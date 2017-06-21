@@ -6,27 +6,11 @@
     <link rel="stylesheet" href="./assets/fonts/streamster/stylesheet.css" />
     <link rel="stylesheet" href="./assets/fonts/sfalienc/stylesheet.css" />
     <link rel="stylesheet" href="./assets/fonts/colorsofautumn/stylesheet.css" />
+    <link href="https://fonts.googleapis.com/css?family=Titillium+Web" rel="stylesheet">
     <link rel="stylesheet" href="./assets/styles/style.css" />
   </head>
   <body>
-  <h1>SHREDBEAT<h1>
-  <form>
-    <input type="text" id="playlistUrl" placeholder="Playlist Url" />
-    <button id="playlistUrlSubmit">Set</button>
-    <div id="controls">
-      <button id="play" disabled>play</button>
-      <button id="stop" disabled>stop</button>
-    </div>
-  </form>
-
-  <h2>SHREDOMETER<h2>
-  <div id="shredProgress">
-    <div id="shredProgressFill"></div>
-  </div>
-
-  <div id="bottom">
-    <a id="quit">quit</a>
-  </div>
+  <div id="root"></div>
 
   <script>
     // You can also require other files to run in this process
@@ -41,9 +25,8 @@
         })
       }
     }
-
-    require('./lib/browser.js')
   </script>
+  <script src="./dist/bundle.js"></script>
 
   </body>
 </html>

@@ -1,8 +1,101 @@
+/*
+ * GLOBALS
+ */
+
 * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
 }
+
+body {
+  font-size: 1em;
+  color: #fff;
+  background-color: #fff;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+  background-image: url(../images/grid.png);
+  background-size: cover;
+}
+
+body,
+input,
+button {
+  font-family: 'Titillium Web', Verdana, Geneva, sans-serif;
+}
+
+::-webkit-input-placeholder { /* Chrome */
+  color: #fff;
+  opacity: 0.7;
+}
+:-ms-input-placeholder { /* IE 10+ */
+  color: #fff;
+  opacity: 0.7;
+}
+::-moz-placeholder { /* Firefox 19+ */
+  color: #fff;
+  opacity: 0.7;
+}
+:-moz-placeholder { /* Firefox 4 - 17 */
+  color: #fff;
+  opacity: 0.7;
+}
+
+input,
+p {
+  -webkit-app-region: no-drag;
+}
+
+@media (min-width: 600px) {
+  body {
+    font-size: 1.2em;
+  }
+}
+
+@media (min-width: 700px) {
+  body {
+    font-size: 1.4em;
+  }
+}
+
+@media (min-width: 800px) {
+  body {
+    font-size: 1.5em;
+  }
+}
+
+@media (max-width: 400px) {
+  body {
+    font-size: 0.8em;
+  }
+}
+
+@media (max-width: 300px) {
+  body {
+    font-size: 0.7em;
+  }
+}
+
+@media (max-width: 250px) {
+  body {
+    font-size: 0.5em;
+  }
+}
+
+@media (max-width: 200px) {
+  body {
+    font-size: 0.4em;
+  }
+}
+
+/*
+ * /END GLOBALS
+ */
+
+/*
+ * SCROLLBAR
+ */
 
 body::-webkit-scrollbar,
 .overflow-x::-webkit-scrollbar,
@@ -30,103 +123,311 @@ body::-webkit-scrollbar-thumb:hover,
   background-color: rgba(100, 100, 100, 0.7);
 }
 
+/*
+ * END SCROLLBAR
+ */
 
-body {
-  background-color: #fff;
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-attachment: fixed;
-  background-image: url(../images/grid.png);
-  background-size: cover;
-  color: #fff;
+.DragRegion {
+  -webkit-app-region: drag;
+  height: 10px;
+  width: 100%;
+  background: rgba(79, 46, 93, 0.45);
+  text-align: right;
+  color: rgba(255,255,255,0.5);
+  font-size: 0.6em;
+}
+
+.DragRegion:hover {
+  background: rgba(79, 46, 93, 0.55);
+  cursor: move;
+}
+
+/*
+ * MAIN VIEW
+ */
+
+.MainView {
   padding: 10px;
 }
-h1 {
-  font-family: 'colors_of_autumnregular', cursive;
-  font-size: 36px;
+
+.MainTitle {
+  display: block;
+  font-family: 'colors_of_autumnregular', Verdana, Geneva, sans-serif;
+  font-size: 2.5em;
   margin: 0;
   color: #1bf4ff;
   text-shadow: 2px 4px #c100ff;
   margin: 0 0 15px 0;
-}
-h2 {
-  font-family: 'sf_alien_encountersitalic', cursive;
-  font-size: 32px;
-  margin: 0;
-  color: #bf65ff;
-  text-shadow: 2px 4px #6e00ff;
-  margin: 0 0 15px 0;
+  text-transform: uppercase;
 }
 
-form:after {
+.PlaylistForm {
+  margin-bottom: 10px;
+}
+
+.PlaylistForm:after {
   content: "";
   display: table;
   clear: both;
 }
-form button {
+
+.PlaylistForm .button {
   float: left;
 }
 
-#controls {
+.PlaylistForm .actions {
   float: right;
 }
 
-input[type="text"] {
-  background: #b872ff;
-  border: none;
-  padding: 5px;
-  font-size: 16px;
+.PlaylistUrlInput {
+  padding: 0.5em;
+  font-size: 1em;
   width: 100%;
-  color: #ddfbff;
-  margin: 0 0 15px 0;
+  color: rgba(255,255,255,0.8);
+  background: rgba(184, 114, 255, 0.6);
+  border: 1px solid #8d47a9;
+  transition: all 0.2s ease-out;
 }
 
-button {
+.PlaylistUrlInput:focus {
+  color: #fff;
+  background: rgba(184, 114, 255, 0.8);
+  border-color: #bb88c7;
+}
+
+.PlaylistUrlInputHelp {
+  margin-bottom: 5px;
+}
+
+.PlaylistUrlInputHelp small {
+  font-size: 0.7em;
+  color: rgba(255, 255, 255, 0.5);
+  opacity: 0.8;
+  transition: opacity 0.2s ease-out;
+}
+
+.PlaylistUrlInputHelp small:hover {
+  opacity: 1
+}
+
+.PlaylistUrlInputHelp small a {
+  color: rgba(255, 255, 255, 0.5);
+  text-decoration: none;
+  transition: color 0.2s ease-out;
+}
+
+.PlaylistUrlInputHelp small a:hover {
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: underline;
+}
+
+.PlaylistForm .button {
   appearance: none;
-  font-family: 'colors_of_autumnregular', cursive;
+  font-family: 'colors_of_autumnregular', Verdana, Geneva, sans-serif;
   background: none;
   border: none;
   color: #1bf4ff;
   padding: 5px;
-  font-size: 28px;
+  font-size: 1.5em;
+  cursor: pointer;
 }
 
-button:disabled {
+.PlaylistForm .button:disabled {
   opacity: 0.5;
   pointer-events: none;
 }
 
-#shredProgress {
-  width: 100%;
-  height: 50px;
-/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#00a5ff+1,00a5ff+1,0061ff+10,6f00f7+22,a400f7+40,ea32ff+56,ea32ff+72,ff3292+85,ff0004+92 */
-background: #00a5ff; /* Old browsers */
-background: -moz-linear-gradient(left, #00a5ff 1%, #00a5ff 1%, #0061ff 10%, #6f00f7 22%, #a400f7 40%, #ea32ff 56%, #ea32ff 72%, #ff3292 85%, #ff0004 92%); /* FF3.6-15 */
-background: -webkit-linear-gradient(left, #00a5ff 1%,#00a5ff 1%,#0061ff 10%,#6f00f7 22%,#a400f7 40%,#ea32ff 56%,#ea32ff 72%,#ff3292 85%,#ff0004 92%); /* Chrome10-25,Safari5.1-6 */
-background: linear-gradient(to right, #00a5ff 1%,#00a5ff 1%,#0061ff 10%,#6f00f7 22%,#a400f7 40%,#ea32ff 56%,#ea32ff 72%,#ff3292 85%,#ff0004 92%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00a5ff', endColorstr='#ff0004',GradientType=1 ); /* IE6-9 */
+/*
+ * /END MAIN VIEW
+ */
+
+/*
+ * SHREDOMETER
+ */
+
+.ShredometerTitle {
+  font-family: 'sf_alien_encountersitalic', Verdana, Geneva, sans-serif;
+  font-size: 2em;
+  margin: 0;
+  color: #bf65ff;
+  text-shadow: 2px 4px #6e00ff;
+  margin: 0 0 15px 0;
+  text-transform: uppercase;
 }
 
-#shredProgressFill {
+.ShredometerProgress {
+  position: relative;
   width: 100%;
+  font-size: 2.5em;
+  color: transparent;
+  transition: all 0.1s ease-out;
+  background: #000;
+  overflow: hidden;
+}
+
+.ShredometerProgressFill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0%;
   height: 100%;
   background: #000;
-  float: right;
+  transition: all 0.5s ease-out;
 }
+
+/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#00a5ff+1,00a5ff+1,0061ff+10,6f00f7+22,a400f7+40,ea32ff+56,ea32ff+72,ff3292+85,ff0004+92 */
+
+.ShredometerProgressFill.low {
+/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#00a5ff+6,00a5ff+14,0061ff+34,6f00f7+57,a400f7+79 */
+background: #00a5ff; /* Old browsers */
+background: -moz-linear-gradient(-45deg, #00a5ff 6%, #00a5ff 14%, #0061ff 34%, #6f00f7 57%, #a400f7 79%); /* FF3.6-15 */
+background: -webkit-linear-gradient(-45deg, #00a5ff 6%,#00a5ff 14%,#0061ff 34%,#6f00f7 57%,#a400f7 79%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(135deg, #00a5ff 6%,#00a5ff 14%,#0061ff 34%,#6f00f7 57%,#a400f7 79%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00a5ff', endColorstr='#a400f7',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+}
+
+
+.ShredometerProgressFill.medium {
+/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#0061ff+10,6f00f7+22,a400f7+40,ea32ff+56,ea32ff+72,ff3292+85 */
+background: #0061ff; /* Old browsers */
+background: -moz-linear-gradient(-45deg, #0061ff 10%, #6f00f7 22%, #a400f7 40%, #ea32ff 56%, #ea32ff 72%, #ff3292 85%); /* FF3.6-15 */
+background: -webkit-linear-gradient(-45deg, #0061ff 10%,#6f00f7 22%,#a400f7 40%,#ea32ff 56%,#ea32ff 72%,#ff3292 85%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(135deg, #0061ff 10%,#6f00f7 22%,#a400f7 40%,#ea32ff 56%,#ea32ff 72%,#ff3292 85%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0061ff', endColorstr='#ff3292',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+}
+
+.ShredometerProgressFill.high {
+/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#a400f7+23,ea32ff+41,ea32ff+52,ff3292+74,ff0004+92 */
+background: #a400f7; /* Old browsers */
+background: -moz-linear-gradient(-45deg, #a400f7 23%, #ea32ff 41%, #ea32ff 52%, #ff3292 74%, #ff0004 92%); /* FF3.6-15 */
+background: -webkit-linear-gradient(-45deg, #a400f7 23%,#ea32ff 41%,#ea32ff 52%,#ff3292 74%,#ff0004 92%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(135deg, #a400f7 23%,#ea32ff 41%,#ea32ff 52%,#ff3292 74%,#ff0004 92%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a400f7', endColorstr='#ff0004',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+}
+
+
+/*
+ * /END SHREDOMETER
+ */
 
 #bottom {
-  text-align: right;
+  padding-top: 10px;
+  margin-bottom: 40px;
 }
 
-#quit {
-  font-size: 12px;
+#settings {
+  font-size: 0.7em;
   font-family: Helvetica, ariel, sans-serif;
   color: rgba(255, 255, 255, 0.4);
   text-shadow: none;
   font-weight: normal;
   cursor: pointer;
   transition: all 0.2s ease-out;
+  float: left;
+}
+
+#quit {
+  font-size: 0.7em;
+  font-family: Helvetica, ariel, sans-serif;
+  color: rgba(255, 255, 255, 0.4);
+  text-shadow: none;
+  font-weight: normal;
+  cursor: pointer;
+  transition: all 0.2s ease-out;
+  float: right;
 }
 #quit:hover {
   color: rgba(255, 255, 255, 0.6);
 }
+
+
+/*
+ * CONFIG SETTINGS
+ */
+
+.ConfigSettings {
+
+}
+
+.ConfigSettings label {
+  text-transform: uppercase;
+  color: #ffb5de;
+}
+
+/*
+ * /END CONFIG SETTINGS
+ */
+
+/*
+ * RANGE SLIDER
+ */
+
+.slider {
+
+}
+
+.horizontal-slider {
+  width: 100%;
+  height: 50px;
+  transition: all 0.2s ease-out;
+  border: 1px solid transparent;
+}
+
+.horizontal-slider:hover {
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.vertical-slider {
+  height: 380px;
+  width: 50px;
+  border: 1px solid grey;
+}
+
+.handle {
+  font-size: 0.9em;
+  text-align: center;
+  cursor: pointer;
+  background: rgba(0, 0, 0, 0.8);
+  color: rgba(255,255,255,0.9)
+}
+.handle span {
+  opacity: 0;
+  transition: all 0.2s ease-out;
+}
+.horizontal-slider:hover .handle span {
+  opacity: 1
+}
+.handle.active {
+  background-color: #000;
+}
+.bar {
+  position: relative;
+  background-color: rgba(255, 58, 158, 0.8);
+}
+.bar.bar-1 {
+  background: rgba(0,0,0,0.5);
+}
+.horizontal-slider .bar {
+  top: 20px;
+  height: 10px;
+}
+.horizontal-slider .handle {
+  top: 1px;
+  width: 50px;
+  height: 48px;
+  line-height: 48px;
+}
+.vertical-slider .handle {
+  left: 1px;
+  width: 48px;
+  line-height: 50px;
+}
+.vertical-slider .bar {
+  left: 20px;
+  width: 10px;
+}
+
+/*
+ * /END RANGE SLIDER
+ */

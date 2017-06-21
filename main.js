@@ -22,19 +22,29 @@ var shell = electron.shell
 var mainWindow
 
 var isLinux = /linux/gi.test(process.platform)
+var isDevMode = (process.env.NODE_ENV === 'development')
+
+var windowWidth = 500
+var windowHeight = 325
+
+if (isDevMode) {
+  windowWidth = 1000
+  windowHeight = 610
+}
 
 var mb = menubar({
   icon: __dirname + '/IconTemplate.png',
   dir: __dirname,
   index: 'file://' + __dirname + '/index.html',
-  width: 500,
-  height: 310,
+  width: windowWidth,
+  height: windowHeight,
   alwaysOnTop: true,
   preloadWindow: true,
   nodeIntegration: true,
   frame: false,
   transparent: true,
-  darkTheme: true
+  darkTheme: true,
+  resizable: true
 })
 
 // right click menu
@@ -98,10 +108,14 @@ function createWindow () {
     slashes: true
   }))
 
-  if (process.env.NODE_ENV === 'development') {
+  if (isDevMode) {
     if (mainWindow.webContents) {
       // Open the DevTools.
-      mainWindow.webContents.openDevTools()
+      if (isLinux) {
+        mainWindow.webContents.openDevTools()
+      } else {
+        mb.window.webContents.openDevTools()
+      }
     }
   }
 
