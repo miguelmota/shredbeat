@@ -4,7 +4,7 @@ const _ = require('lodash')
 const {Player, YoutubePlayer} = require('audio-director')
 
 // https://github.com/electron/electron/issues/7300
-const {remote} = window.require('electron')
+const {remote, shell} = window.require('electron')
 
 const Shredometer = require('./Shredometer.jsx')
 const ConfigSettings = require('./ConfigSettings.jsx')
@@ -102,6 +102,8 @@ class Main extends React.Component {
       this.state.playlistUrlInput = playlistUrl;
       this.setPlaylistUrl(playlistUrl)
     }
+
+    this.onExternalClick = this.onExternalClick.bind(this)
   }
 
   render() {
@@ -130,7 +132,24 @@ class Main extends React.Component {
               placeholder="Playlist URL" />
             <div className="PlaylistUrlInputHelp">
               <p>
-              <small>Use <a href="https://www.youtube.com/" target="_blank">YouTube</a>, <a href="https://soundcloud.com/" target="_blank">SoundCloud</a>, <a href="http://hypem.com/" target="_blank">Hype Machine</a>, <a href="https://www.mixcloud.com/" target="_blank">Mixcloud</a>, or <a href="https://fanburst.com/" target="_blank">Fanburst</a> playlist urls</small>
+              <small>Use
+                <a
+                  onClick={this.onExternalClick}
+                  href="https://www.youtube.com/">YouTube</a>,&nbsp;
+                <a
+                  onClick={this.onExternalClick}
+                  href="https://soundcloud.com/">SoundCloud</a>,&nbsp;
+                <a
+                  onClick={this.onExternalClick}
+                  href="http://hypem.com/">Hype Machine</a>,&nbsp;
+                <a
+                  onClick={this.onExternalClick}
+                  href="https://www.mixcloud.com/">Mixcloud</a>,&nbsp;
+                or&nbsp;
+                <a
+                  onClick={this.onExternalClick}
+                  href="https://fanburst.com/">Fanburst</a>&nbsp;
+                playlist urls</small>
               </p>
             </div>
           </div>
@@ -167,6 +186,11 @@ class Main extends React.Component {
         <ConfigSettings />
       </div>
     )
+  }
+
+  onExternalClick(event) {
+    event.preventDefault()
+    shell.openExternal(event.target.href)
   }
 
   onPlaylistUrlInput(event) {
