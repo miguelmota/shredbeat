@@ -21,7 +21,6 @@
     window.shredbeat = {
       osGlobalKeyPress: function(callback) {
         ipcRenderer.on('keypress', (event, message) => {
-          console.log(message)
           callback(message);
         })
       }

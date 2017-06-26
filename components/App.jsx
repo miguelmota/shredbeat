@@ -13,11 +13,9 @@ class App extends React.Component {
   render() {
     return (
       <Router>
-        <div>
         <div className="ui grid stackable padded">
           <div className="DragRegion">drag me</div>
           <Route exact path="/" component={Main}/>
-        </div>
         </div>
       </Router>
     )

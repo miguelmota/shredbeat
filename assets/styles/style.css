@@ -124,7 +124,35 @@ body::-webkit-scrollbar-thumb:hover,
 }
 
 /*
- * END SCROLLBAR
+ * /END SCROLLBAR
+ */
+
+/*
+ * MESSAGE ALERT
+ */
+
+.message {
+  background: rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(150, 150, 150, 0.18);
+  padding: 5px;
+  margin: 0 auto 10px auto;
+  font-size: 0.9em;
+}
+
+.message.error {
+  color: #ff5176;
+}
+
+.message.success {
+  color: #51ff81;
+}
+
+/*
+ * /END MESSAGE ALERT
+ */
+
+/*
+ * DRAG REGION
  */
 
 .DragRegion {
@@ -141,6 +169,10 @@ body::-webkit-scrollbar-thumb:hover,
   background: rgba(79, 46, 93, 0.55);
   cursor: move;
 }
+
+/*
+ * /END DRAG REGION
+ */
 
 /*
  * MAIN VIEW
@@ -204,7 +236,10 @@ body::-webkit-scrollbar-thumb:hover,
   border-color: #bb88c7;
 }
 
-.PlaylistUrlSubmit {
+.PlaylistUrlSubmit,
+.PlaylistUrlSubmit:active,
+.PlaylistUrlSubmit:focus,
+.PlaylistUrlSubmit:hover {
   display: inline-block;
   appearance: none;
   font-family: 'colors_of_autumnregular', Verdana, Geneva, sans-serif;
@@ -216,6 +251,7 @@ body::-webkit-scrollbar-thumb:hover,
   cursor: pointer;
   width: 20%;
   text-align: center;
+  outline: 0;
 }
 
 .PlaylistUrlSubmit:disabled {
@@ -340,7 +376,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a400f7', end
 .PlayerControlButton:focus,
 .PlayerControlButton:active {
   appearance: none;
-  outline: none;
+  outline: 0;
   background: none;
   border: none;
   color: #fff;

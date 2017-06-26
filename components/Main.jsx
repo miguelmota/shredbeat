@@ -32,7 +32,8 @@ class Main extends React.Component {
       isMuted: false,
       maxVolume: 1,
       isPlaying: true,
-      shredProgress: 0
+      shredProgress: 0,
+      errorMessage: null
     }
 
     player.on('EmptyQueue', () => {
@@ -122,10 +123,12 @@ class Main extends React.Component {
       player.setVolume(volume)
     }, 100))
 
-    store.on('sensitivity', (value) => {
+    store.on('sensitivity', _.throttle(value => {
       shredometerService.setSensitivity(value)
-    })
+    }, 100))
 
+    this.handleError = this.handleError.bind(this)
+    this.onExternalClick = this.onExternalClick.bind(this)
     this.setPlaylistUrl = this.setPlaylistUrl.bind(this)
 
     const playlistUrl = store.get('playlistUrl')
@@ -134,8 +137,6 @@ class Main extends React.Component {
       this.state.playlistUrlInput = playlistUrl;
       this.setPlaylistUrl(playlistUrl)
     }
-
-    this.onExternalClick = this.onExternalClick.bind(this)
   }
 
   render() {
@@ -152,7 +153,8 @@ class Main extends React.Component {
       repeatActive,
       isMuted,
       maxVolume,
-      shredProgress
+      shredProgress,
+      errorMessage
     } = this.state
 
     return (
@@ -160,6 +162,11 @@ class Main extends React.Component {
         <div className="ui large header MainTitle">
           Shredbeat
         </div>
+        {errorMessage ?
+          <div className="ui message error">
+            {errorMessage}
+          </div>
+        : null}
         <div className="PlaylistFormContainer">
           <form
             className="ui form PlaylistForm"
@@ -260,6 +267,10 @@ class Main extends React.Component {
   }
 
   setPlaylistUrl(url) {
+    this.setState({
+      errorMessage: null
+    })
+
     player.stop()
 
     // timeout used because of player stop/play events listener
@@ -278,7 +289,9 @@ class Main extends React.Component {
           playButtonDisabled: false
         })
       }, 1e3)
+
       return player.setPlaylist(url)
+      .catch(this.handleError)
     } else {
       musicService.getPlaylist(url)
       .then(tracks => {
@@ -296,9 +309,7 @@ class Main extends React.Component {
 
         return player.setPlaylist(tracks)
       })
-      .catch(error => {
-        console.error(error)
-      })
+      .catch(this.handleError)
     }
   }
 
@@ -378,6 +389,14 @@ class Main extends React.Component {
     event.preventDefault()
 
     remote.app.quit()
+  }
+
+  handleError(error) {
+    console.error(error)
+
+    this.setState({
+      errorMessage: error
+    })
   }
 }
 
