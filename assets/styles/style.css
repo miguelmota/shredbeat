@@ -175,6 +175,26 @@ body::-webkit-scrollbar-thumb:hover,
  */
 
 /*
+ * RESIZE HANDLE
+ */
+
+.ResizeHandle {
+  -webkit-app-region: no-drag;
+  position: absolute;
+  top: 0;
+  left: 0;
+  text-align: left;
+  color: rgba(255,255,255,0.5);
+  font-size: 0.6em;
+}
+
+/*
+ * /END RESIZE HANDLE
+ */
+
+
+
+/*
  * MAIN VIEW
  */
 
@@ -240,6 +260,7 @@ body::-webkit-scrollbar-thumb:hover,
 .PlaylistUrlSubmit:active,
 .PlaylistUrlSubmit:focus,
 .PlaylistUrlSubmit:hover {
+  position: relative;
   display: inline-block;
   appearance: none;
   font-family: 'colors_of_autumnregular', Verdana, Geneva, sans-serif;
@@ -257,6 +278,15 @@ body::-webkit-scrollbar-thumb:hover,
 .PlaylistUrlSubmit:disabled {
   opacity: 0.5;
   pointer-events: none;
+}
+
+.PlaylistUrlSubmit i {
+  opacity: 0;
+  transition: all 0.2s ease-out;
+}
+
+.PlaylistUrlSubmit.loading i {
+  opacity: 1;
 }
 
 .PlaylistUrlInputHelp {

@@ -6,6 +6,7 @@ const defaultMenu = require('electron-default-menu')
 
 var debug = require('./lib/debug')
 var keyPressLogger = require('./lib/keyPressLogger')
+const store = require('./lib/storeService')
 
 var globalShortcut = electron.globalShortcut
 
@@ -24,8 +25,12 @@ var mainWindow
 var isLinux = /linux/gi.test(process.platform)
 var isDevMode = (process.env.NODE_ENV === 'development')
 
-var windowWidth = 500
-var windowHeight = 325
+var cachedBounds = store.get('windowBounds')
+
+var windowWidth = cachedBounds ? cachedBounds.width : 500
+var windowHeight = cachedBounds ? cachedBounds.height : 325
+var x = cachedBounds ? cachedBounds.x : undefined
+var y = cachedBounds ? cachedBounds.y : undefined
 
 if (isDevMode) {
   windowWidth = 1000
@@ -36,6 +41,8 @@ var mb = menubar({
   icon: __dirname + '/IconTemplate.png',
   dir: __dirname,
   index: 'file://' + __dirname + '/index.html',
+  x: x,
+  y: y,
   width: windowWidth,
   height: windowHeight,
   alwaysOnTop: true,
@@ -44,7 +51,9 @@ var mb = menubar({
   frame: false,
   transparent: true,
   darkTheme: true,
-  resizable: true
+  resizable: true,
+  showOnAllWorkspaces: false,
+  showDockIcon: false
 })
 
 // right click menu
@@ -90,13 +99,31 @@ function onReady() {
 // showing regular window for linux
 if (!isLinux) {
   mb.on('ready', onReady)
+
+  mb.on('after-hide', onWindowHide)
+  mb.on('after-close', onWindowHide)
+  mb.on('focus-lost', onWindowHide)
+}
+
+function onWindowHide() {
+  var bounds = mb.window.getBounds()
+
+  if (bounds) {
+    store.set('windowBounds', bounds)
+
+
+    mb.setOption('width', bounds.width)
+    mb.setOption('height', bounds.height)
+    mb.setOption('x', bounds.x)
+    mb.setOption('y', bounds.y)
+  }
 }
 
 function createWindow () {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: windowWidth,
+    height: windowHeight,
     icon: __dirname + '/IconTemplate.png',
     show: isLinux
   })

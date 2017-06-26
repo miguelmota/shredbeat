@@ -14,6 +14,7 @@ class App extends React.Component {
     return (
       <Router>
         <div className="ui grid stackable padded">
+          <div className="ResizeHandle">resize me</div>
           <div className="DragRegion">drag me</div>
           <Route exact path="/" component={Main}/>
         </div>

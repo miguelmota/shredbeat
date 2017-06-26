@@ -33,7 +33,8 @@ class Main extends React.Component {
       maxVolume: 1,
       isPlaying: true,
       shredProgress: 0,
-      errorMessage: null
+      errorMessage: null,
+      isFetchingPlaylist: false
     }
 
     player.on('EmptyQueue', () => {
@@ -154,7 +155,8 @@ class Main extends React.Component {
       isMuted,
       maxVolume,
       shredProgress,
-      errorMessage
+      errorMessage,
+      isFetchingPlaylist
     } = this.state
 
     return (
@@ -179,10 +181,10 @@ class Main extends React.Component {
                 onInput={this.onPlaylistUrlInput.bind(this)}
                 placeholder="Playlist URL" />
               <button
-                className="ui button PlaylistUrlSubmit"
+                className={`ui button PlaylistUrlSubmit ${isFetchingPlaylist ? 'loading': ''}`}
                 type="submit"
                 disabled={playlistUrlSubmitDisabled}>
-                Set
+                {isFetchingPlaylist ? <i className="fa fa-circle-o-notch fa-spin"></i> : <span>Set</span>}
               </button>
             </div>
             <div className="PlaylistUrlInputHelp">
@@ -268,7 +270,8 @@ class Main extends React.Component {
 
   setPlaylistUrl(url) {
     this.setState({
-      errorMessage: null
+      errorMessage: null,
+      isFetchingPlaylist: true
     })
 
     player.stop()
@@ -286,7 +289,8 @@ class Main extends React.Component {
       setTimeout(() => {
         this.setState({
           playlistUrlSubmitDisabled: false,
-          playButtonDisabled: false
+          playButtonDisabled: false,
+          isFetchingPlaylist: false
         })
       }, 1e3)
 
@@ -303,13 +307,22 @@ class Main extends React.Component {
 
         setTimeout(() => {
           this.setState({
-            playlistUrlSubmitDisabled: false
+            playlistUrlSubmitDisabled: false,
+            isFetchingPlaylist: false
           })
         }, 10)
 
         return player.setPlaylist(tracks)
       })
-      .catch(this.handleError)
+      .catch(error => {
+        setTimeout(() => {
+          this.setState({
+            isFetchingPlaylist: false
+          })
+        }, 10)
+
+        this.handleError(error)
+      })
     }
   }
 
