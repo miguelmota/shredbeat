@@ -1,22 +1,18 @@
 const React = require('react')
 const ReactDOM = require('react-dom')
 const _ = require('lodash')
-const {Player, YoutubePlayer} = require('audio-director')
 
 // https://github.com/electron/electron/issues/7300
 const {remote, shell} = window.require('electron')
 
-const Shredometer = require('./Shredometer.jsx')
-const ConfigSettings = require('./ConfigSettings.jsx')
 const musicService = require('../lib/musicService')
 const shredometerService = require('../lib/shredometerService')
 const store = require('../lib/storeService')
+const player = require('../lib/playerService')
 
-var PlayerEventTypes = Player.EventTypes
-var playerA = new Player()
-var playerB = new YoutubePlayer()
-
-var player = playerB
+const Shredometer = require('./Shredometer.jsx')
+const ConfigSettings = require('./ConfigSettings.jsx')
+const Player = require('./Player.jsx')
 
 class Main extends React.Component {
   constructor(props) {
@@ -27,42 +23,90 @@ class Main extends React.Component {
       playlistUrlSubmitDisabled: false,
       playButtonDisabled: true,
       stopButtonDisabled: true,
+      nextButtonDisabled: true,
+      prevButtonDisabled: true,
+      randomButtonDisabled: false,
+      repeatButtonDisabled: false,
+      randomActive: false,
+      repeatActive: false,
+      isMuted: false,
+      maxVolume: 1,
       isPlaying: true,
       shredProgress: 0
     }
 
-    playerA.on(PlayerEventTypes.ENQUEUE, () => {
-      this.setState({playButtonDisabled: false})
-    })
-    playerB.on(PlayerEventTypes.ENQUEUE, () => {
-      this.setState({playButtonDisabled: false})
+    player.on('EmptyQueue', () => {
+      this.setState({
+        playButtonDisabled: true,
+        stopButtonDisabled: true,
+        nextButtonDisabled: true,
+        prevButtonDisabled: true,
+        randomButtonDisabled: false,
+        repeatButtonDisabled: false
+      })
     })
 
-    playerA.on(PlayerEventTypes.PLAY, () => {
+    player.on('Enqueue', () => {
+      this.setState({playButtonDisabled: false})
+
+      player.hasPrevious()
+      .then(hasPrevious => {
+        this.setState({
+          previousButtonDisabled: !hasPrevious
+        })
+      })
+
+      player.hasNext()
+      .then(hasNext => {
+        this.setState({
+          nextButtonDisabled: !hasNext
+        })
+      })
+    })
+
+    player.on('Play', () => {
       this.setState({
         playButtonDisabled: true,
         stopButtonDisabled: false
       })
     })
 
-    playerB.on(PlayerEventTypes.PLAY, () => {
-      this.setState({
-        playButtonDisabled: true,
-        stopButtonDisabled: false
-      })
-    })
-
-    playerA.on(PlayerEventTypes.STOP, () => {
+    player.on('Stop', () => {
       this.setState({
         playButtonDisabled: false,
         stopButtonDisabled: true
       })
     })
 
-    playerB.on(PlayerEventTypes.STOP, () => {
-      this.setState({
-        playButtonDisabled: false,
-        stopButtonDisabled: true
+    player.on('Previous', () => {
+      player.hasPrevious()
+      .then(hasPrevious => {
+        this.setState({
+          previousButtonDisabled: !hasPrevious
+        })
+      })
+
+      player.hasNext()
+      .then(hasNext => {
+        this.setState({
+          nextButtonDisabled: !hasNext
+        })
+      })
+    })
+
+    player.on('Next', () => {
+      player.hasPrevious()
+      .then(hasPrevious => {
+        this.setState({
+          previousButtonDisabled: !hasPrevious
+        })
+      })
+
+      player.hasNext()
+      .then(hasNext => {
+        this.setState({
+          nextButtonDisabled: !hasNext
+        })
       })
     })
 
@@ -70,31 +114,19 @@ class Main extends React.Component {
       this.setState({shredProgress})
     }, 100))
 
-    shredometerService.on('ShredRate', shredRate => {
-      if (playerA.isReady) {
-        playerA.setPlaybackRate(shredRate)
-      }
+    shredometerService.on('ShredRate', _.throttle(shredRate => {
+      player.setPlaybackRate(shredRate)
+    }, 100))
 
-      if (playerB.isReady) {
-        playerB.setPlaybackRate(shredRate)
-      }
-    })
-
-    shredometerService.on('AmplitudeRate', volume => {
-      if (playerA.isReady) {
-        playerA.setVolume(volume)
-      }
-
-      if (playerB.isReady) {
-        playerB.setVolume(volume)
-      }
-    })
+    shredometerService.on('AmplitudeRate', _.throttle(volume => {
+      player.setVolume(volume)
+    }, 100))
 
     store.on('sensitivity', (value) => {
       shredometerService.setSensitivity(value)
     })
 
-    this.setPlaylistUrl.bind(this)
+    this.setPlaylistUrl = this.setPlaylistUrl.bind(this)
 
     const playlistUrl = store.get('playlistUrl')
 
@@ -112,7 +144,15 @@ class Main extends React.Component {
       playlistUrlSubmitDisabled,
       playButtonDisabled,
       stopButtonDisabled,
-      shredProgress,
+      nextButtonDisabled,
+      previousButtonDisabled,
+      randomButtonDisabled,
+      repeatButtonDisabled,
+      randomActive,
+      repeatActive,
+      isMuted,
+      maxVolume,
+      shredProgress
     } = this.state
 
     return (
@@ -120,19 +160,27 @@ class Main extends React.Component {
         <div className="ui large header MainTitle">
           Shredbeat
         </div>
-        <form
-          className="ui form PlaylistForm"
-          onSubmit={this.onPlaylistFormSubmit.bind(this)}>
-          <div>
-            <input
-              type="text"
-              className="ui input PlaylistUrlInput"
-              defaultValue={playlistUrlInput}
-              onInput={this.onPlaylistUrlInput.bind(this)}
-              placeholder="Playlist URL" />
+        <div className="PlaylistFormContainer">
+          <form
+            className="ui form PlaylistForm"
+            onSubmit={this.onPlaylistFormSubmit.bind(this)}>
+            <div className="PlaylistUrlInputContainer">
+              <input
+                type="text"
+                className="ui input PlaylistUrlInput"
+                defaultValue={playlistUrlInput}
+                onInput={this.onPlaylistUrlInput.bind(this)}
+                placeholder="Playlist URL" />
+              <button
+                className="ui button PlaylistUrlSubmit"
+                type="submit"
+                disabled={playlistUrlSubmitDisabled}>
+                Set
+              </button>
+            </div>
             <div className="PlaylistUrlInputHelp">
               <p>
-              <small>Use
+              <small>Use&nbsp;
                 <a
                   onClick={this.onExternalClick}
                   href="https://www.youtube.com/">YouTube</a>,&nbsp;
@@ -152,34 +200,39 @@ class Main extends React.Component {
                 playlist urls</small>
               </p>
             </div>
+          </form>
+          <div className="PlayerContainer">
+            <Player
+              playButtonDisabled={playButtonDisabled}
+              pauseButtonDisabled={stopButtonDisabled}
+              stopButtonDisabled={stopButtonDisabled}
+              previousButtonDisabled={previousButtonDisabled}
+              nextButtonDisabled={nextButtonDisabled}
+              randomButtonDisabled={randomButtonDisabled}
+              repeatButtonDisabled={repeatButtonDisabled}
+              onPlayClick={this.onPlay.bind(this)}
+              onPauseClick={this.onStop.bind(this)}
+              onStopClick={this.onStop.bind(this)}
+              onPreviousClick={this.onPrev.bind(this)}
+              onNextClick={this.onNext.bind(this)}
+              onRandomClick={this.onRandom.bind(this)}
+              onRepeatClick={this.onRepeat.bind(this)}
+              onVolumeClick={this.onVolumeClick.bind(this)}
+              onVolumeChange={this.onVolumeChange.bind(this)}
+              repeatActive={repeatActive}
+              randomActive={randomActive}
+            />
           </div>
-          <button
-            className="ui button PlaylistUrlSubmit"
-            type="submit"
-            disabled={playlistUrlSubmitDisabled}>
-            Set
-          </button>
-          <div className="actions">
-            <button
-            className="ui button PlayButton"
-            onClick={this.onPlay.bind(this)}
-            disabled={playButtonDisabled}>
-            play
-            </button>
-
-            <button
-              className="ui button StopButton"
-              onClick={this.onStop.bind(this)}
-              disabled={stopButtonDisabled}>
-              stop
-              </button>
-          </div>
-        </form>
+        </div>
 
         <Shredometer shredProgress={shredProgress} />
 
         <div id="bottom">
-          <a id="settings" onClick={this.onSettingsClick}>settings</a>
+          <a id="settings"
+            onClick={this.onSettingsClick}>
+            <i className="fa fa-cog" aria-hidden="true"></i>&nbsp;
+            settings
+          </a>
           <a id="quit" onClick={this.onQuitClick.bind(this)}>quit</a>
         </div>
 
@@ -187,6 +240,11 @@ class Main extends React.Component {
       </div>
     )
   }
+
+/*
+                <i className="fa fa-circle-o-notch" aria-hidden="true"></i>
+                <i className="fa fa-window-minimize" aria-hidden="true"></i>
+                */
 
   onExternalClick(event) {
     event.preventDefault()
@@ -207,41 +265,41 @@ class Main extends React.Component {
     // timeout used because of player stop/play events listener
     setTimeout(() => {
       this.setState({
-        playlistUrlSubmitDisabled: true,
+        //playlistUrlSubmitDisabled: true,
         playButtonDisabled: true,
         stopButtonDisabled: true
       })
     }, 0)
 
     if (/youtube\.com/gi.test(url)) {
-      player = playerB
-      player.emptyQueue()
       setTimeout(() => {
         this.setState({
           playlistUrlSubmitDisabled: false,
           playButtonDisabled: false
         })
       }, 1e3)
-      return player.enqueue(url)
+      return player.setPlaylist(url)
     } else {
-      player = playerA
-    }
+      musicService.getPlaylist(url)
+      .then(tracks => {
+        console.log(tracks)
 
-    musicService.getPlaylist(url)
-    .then(tracks => {
-      console.log(tracks)
-      player.emptyQueue()
+        this.setState({
+          playButtonDisabled: false
+        })
 
-      this.setState({
-        playlistUrlSubmitDisabled: false,
-        playButtonDisabled: false
+        setTimeout(() => {
+          this.setState({
+            playlistUrlSubmitDisabled: false
+          })
+        }, 10)
+
+        return player.setPlaylist(tracks)
       })
-
-      return player.enqueue(tracks)
-    })
-    .catch(error => {
-      console.error(error)
-    });
+      .catch(error => {
+        console.error(error)
+      })
+    }
   }
 
   onPlaylistFormSubmit(event) {
@@ -263,6 +321,36 @@ class Main extends React.Component {
     })
   }
 
+  onRandom() {
+    const enabled = !this.state.randomActive
+
+    player.setRandom(enabled)
+
+    this.setState({
+      randomActive: enabled
+    })
+  }
+
+  onRepeat() {
+    const enabled = !this.state.repeatActive
+
+    player.setRepeat(enabled)
+
+    this.setState({
+      repeatActive: enabled
+    })
+  }
+
+  onVolumeChange(volume) {
+    player.setMaxVolume(volume)
+  }
+
+  onVolumeClick() {
+    const enabled = !this.state.isMuted
+
+    player.setMute(enabled)
+  }
+
   onStop() {
     player.pause()
 
@@ -270,6 +358,14 @@ class Main extends React.Component {
       stopButtonDisabled: true,
       playButtonDisabled: false
     })
+  }
+
+  onPrev() {
+    player.previous()
+  }
+
+  onNext() {
+    player.next()
   }
 
   onSettingsClick(event) {

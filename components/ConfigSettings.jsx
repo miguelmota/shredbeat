@@ -19,24 +19,24 @@ class ConfigSettings extends React.Component {
     return (
       <div className="ui grid ConfigSettings" id="ConfigSettings">
       <form className="ui form">
-      <div className="ui field">
-      <label>Sensitivity</label>
+        <div className="ui field">
+          <label>Sensitivity</label>
 
-      <Slider
-      className="slider horizontal-slider"
-      min={0}
-      step={1}
-      max={100}
-      defaultValue={sensitivity}
-      orientation="horizontal"
-      onChange={this.onSensitivityChange.bind(this)}
-      withBars
-      >
-      <div className="handle">
-      <span>{sensitivity}%</span>
-      </div>
-      </Slider>
-      </div>
+          <Slider
+          className="SettingRangeSlider"
+          min={0}
+          step={1}
+          max={100}
+          defaultValue={sensitivity}
+          orientation="horizontal"
+          onChange={this.onSensitivityChange.bind(this)}
+          withBars
+          >
+            <div className="handle">
+              <span>{sensitivity}%</span>
+            </div>
+          </Slider>
+        </div>
       </form>
       </div>
     )

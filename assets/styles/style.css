@@ -161,6 +161,10 @@ body::-webkit-scrollbar-thumb:hover,
   text-transform: uppercase;
 }
 
+.PlaylistFormContainer {
+  position: relative;
+}
+
 .PlaylistForm {
   margin-bottom: 10px;
 }
@@ -179,10 +183,15 @@ body::-webkit-scrollbar-thumb:hover,
   float: right;
 }
 
+.PlaylistUrlInputContainer {
+  display: flex;
+}
+
 .PlaylistUrlInput {
+  display: inline-block;
   padding: 0.5em;
   font-size: 1em;
-  width: 100%;
+  width: 80%;
   color: rgba(255,255,255,0.8);
   background: rgba(184, 114, 255, 0.6);
   border: 1px solid #8d47a9;
@@ -193,6 +202,25 @@ body::-webkit-scrollbar-thumb:hover,
   color: #fff;
   background: rgba(184, 114, 255, 0.8);
   border-color: #bb88c7;
+}
+
+.PlaylistUrlSubmit {
+  display: inline-block;
+  appearance: none;
+  font-family: 'colors_of_autumnregular', Verdana, Geneva, sans-serif;
+  background: none;
+  border: none;
+  color: #1bf4ff;
+  padding: 5px;
+  font-size: 1.5em;
+  cursor: pointer;
+  width: 20%;
+  text-align: center;
+}
+
+.PlaylistUrlSubmit:disabled {
+  opacity: 0.5;
+  pointer-events: none;
 }
 
 .PlaylistUrlInputHelp {
@@ -219,22 +247,6 @@ body::-webkit-scrollbar-thumb:hover,
 .PlaylistUrlInputHelp small a:hover {
   color: rgba(255, 255, 255, 0.7);
   text-decoration: underline;
-}
-
-.PlaylistForm .button {
-  appearance: none;
-  font-family: 'colors_of_autumnregular', Verdana, Geneva, sans-serif;
-  background: none;
-  border: none;
-  color: #1bf4ff;
-  padding: 5px;
-  font-size: 1.5em;
-  cursor: pointer;
-}
-
-.PlaylistForm .button:disabled {
-  opacity: 0.5;
-  pointer-events: none;
 }
 
 /*
@@ -310,6 +322,231 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a400f7', end
  * /END SHREDOMETER
  */
 
+/*
+ * PLAYER
+ */
+.PlayerContainer {
+  position: relative;
+  width: 100%;
+  margin-bottom: 15px;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.Player {
+  position: relative;
+}
+
+.PlayerControlButton,
+.PlayerControlButton:focus,
+.PlayerControlButton:active {
+  appearance: none;
+  outline: none;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.4em;
+  cursor: pointer;
+  padding: 0.2em;
+  line-height: 1;
+  opacity: 0.9;
+  transition: opacity 0.2s ease-out;
+}
+
+.PlayerControlButton:hover,
+.PlayerControlButton:active {
+  opacity: 1;
+}
+
+.PlayerControlButton:disabled,
+.PlayerControlButton.disabled,
+.PlayerControlButton:disabled:hover,
+.PlayerControlButton.disabled:hover {
+  color: #a2a2a2;
+  opacity: 0.2;
+  pointer-events: none;
+}
+
+.PlayerControlRandomButton,
+.PlayerControlRepeatButton,
+.PlayerControlRandomButton:active,
+.PlayerControlRepeatButton:active,
+.PlayerControlRandomButton:focus,
+.PlayerControlRepeatButton:focus {
+  opacity: 0.3;
+}
+
+.PlayerControlRandomButton:hover,
+.PlayerControlRepeatButton:hover {
+  opacity: 0.5;
+}
+
+.PlayerControlRandomButton.active,
+.PlayerControlRepeatButton.active,
+.PlayerControlRandomButton.active:active,
+.PlayerControlRepeatButton.active:active,
+.PlayerControlRandomButton.active:focus,
+.PlayerControlRepeatButton.active:focus {
+  opacity: 0.9;
+}
+
+.PlayerControlRandomButton.active:hover,
+.PlayerControlRepeatButton.active:hover {
+  opacity: 1;
+}
+
+.PlayerVolumeContainer {
+  position: absolute;
+  bottom: 0.5em;
+  right: 0.5em;
+}
+/*
+ * /END PLAYER
+ */
+
+/*
+ * VOLUME SLIDER
+ */
+
+.VolumeSliderContainer {
+  height: 150px;
+  width: 20px;
+  position: relative;
+}
+
+.VolumeSliderWrapper {
+  height: 100px;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: inline-block;
+  font-size: 0.6em;
+  text-align: center;
+}
+
+.VolumeSlider {
+  height: 80px;
+  width: 10px;
+  margin: 0 auto;
+  border: 1px solid rgba(255,255,255,0.3);
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.VolumeSlider.visible {
+  visibility: visible;
+}
+
+.VolumeSlider.hidden {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.VolumeSlider .handle {
+  left: 1px;
+  width: 48px;
+  line-height: 50px;
+}
+
+.VolumeSlider .bar {
+  position: relative;
+  left: 0;
+  width: 10px;
+  height: 100%;
+  background: rgba(255,255,255,0.1);
+  cursor: pointer;
+}
+
+.VolumeSlider.handle.active {
+  background-color: #000;
+}
+
+.VolumeSlider .bar.bar-1 {
+  background: rgba(255,255,255,0.9);
+}
+
+/*
+ * /END VOLUME SLIDER
+ */
+
+
+
+/*
+ * CONFIG SETTINGS
+ */
+
+.ConfigSettings {
+
+}
+
+.ConfigSettings label {
+  display: block;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  color: #ffb5de;
+}
+
+/*
+ * /END CONFIG SETTINGS
+ */
+
+/*
+ * SETTING RANGE SLIDER
+ */
+
+.SettingRangeSlider {
+  width: 100%;
+  height: 50px;
+  transition: all 0.2s ease-out;
+  border: 1px solid transparent;
+}
+
+.SettingRangeSlider:hover {
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.SettingRangeSlider .handle {
+  top: 1px;
+  width: 50px;
+  height: 48px;
+  line-height: 48px;
+  font-size: 0.9em;
+  text-align: center;
+  cursor: pointer;
+  background: rgba(0, 0, 0, 0.8);
+  color: rgba(255,255,255,0.9)
+}
+
+.SettingRangeSlider .handle span {
+  opacity: 0;
+  transition: all 0.2s ease-out;
+}
+
+.SettingRangeSlider:hover .handle span {
+  opacity: 1
+}
+
+.SettingRangeSlider .handle.active {
+  background-color: #000;
+}
+
+.SettingRangeSlider .bar {
+  position: relative;
+  top: 20px;
+  height: 10px;
+  background-color: rgba(255, 58, 158, 0.8);
+}
+
+.SettingRangeSlider .bar.bar-1 {
+  background: rgba(0,0,0,0.5);
+}
+
+/*
+ * /END SETTING RANGE SLIDER
+ */
+
+
 #bottom {
   padding-top: 10px;
   margin-bottom: 40px;
@@ -339,95 +576,3 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a400f7', end
 #quit:hover {
   color: rgba(255, 255, 255, 0.6);
 }
-
-
-/*
- * CONFIG SETTINGS
- */
-
-.ConfigSettings {
-
-}
-
-.ConfigSettings label {
-  text-transform: uppercase;
-  color: #ffb5de;
-}
-
-/*
- * /END CONFIG SETTINGS
- */
-
-/*
- * RANGE SLIDER
- */
-
-.slider {
-
-}
-
-.horizontal-slider {
-  width: 100%;
-  height: 50px;
-  transition: all 0.2s ease-out;
-  border: 1px solid transparent;
-}
-
-.horizontal-slider:hover {
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  background: rgba(255, 255, 255, 0.07);
-}
-
-.vertical-slider {
-  height: 380px;
-  width: 50px;
-  border: 1px solid grey;
-}
-
-.handle {
-  font-size: 0.9em;
-  text-align: center;
-  cursor: pointer;
-  background: rgba(0, 0, 0, 0.8);
-  color: rgba(255,255,255,0.9)
-}
-.handle span {
-  opacity: 0;
-  transition: all 0.2s ease-out;
-}
-.horizontal-slider:hover .handle span {
-  opacity: 1
-}
-.handle.active {
-  background-color: #000;
-}
-.bar {
-  position: relative;
-  background-color: rgba(255, 58, 158, 0.8);
-}
-.bar.bar-1 {
-  background: rgba(0,0,0,0.5);
-}
-.horizontal-slider .bar {
-  top: 20px;
-  height: 10px;
-}
-.horizontal-slider .handle {
-  top: 1px;
-  width: 50px;
-  height: 48px;
-  line-height: 48px;
-}
-.vertical-slider .handle {
-  left: 1px;
-  width: 48px;
-  line-height: 50px;
-}
-.vertical-slider .bar {
-  left: 20px;
-  width: 10px;
-}
-
-/*
- * /END RANGE SLIDER
- */
