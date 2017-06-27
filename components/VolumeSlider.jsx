@@ -14,17 +14,38 @@ class VolumeSlider extends React.Component {
       volume = props.volume
     }
 
-    this.state = {
-      volume,
-      showSlider: false
+    let muted = false
+
+    if (typeof props.muted === 'boolean') {
+      muted = props.muted
     }
 
-    this.onVolumeChange = props.onVolumeChange.bind(this)
+    this.state = {
+      volume,
+      showSlider: false,
+      muted
+    }
+
+    this.onVolumeChange = (props.onVolumeChange || (()=>{})).bind(this)
+    this.onMuteToggle = (props.onMutetoggle || (()=>{})).bind(this)
   }
 
   render() {
-    const volume = 1 - this.state.volume
-    const showSlider = this.state.showSlider
+    const {showSlider, muted, volume} = this.state
+    let volumeValue = 1 - volume
+    const volumeLow = volume <= 0.5
+
+    let volumeIcon = 'fa-volume-up'
+
+    if (muted) {
+      volumeValue = 1
+    }
+
+    if (muted || volume <= 0) {
+      volumeIcon = 'fa-volume-off'
+    } else if (volumeLow) {
+      volumeIcon = 'fa-volume-down'
+    }
 
     return (
       <div
@@ -38,7 +59,8 @@ class VolumeSlider extends React.Component {
             min={0}
             step={.1}
             max={1}
-            defaultValue={volume}
+            defaultValue={volumeValue}
+            value={volumeValue}
             orientation="vertical"
             onChange={this.onSliderChange.bind(this)}
             withBars
@@ -46,8 +68,8 @@ class VolumeSlider extends React.Component {
           </Slider>
           <button
             className="PlayerControlButton PlayerControlVolumeButton"
-            onClick={this.onVolumeClick}>
-              <i className="fa fa-volume-up" aria-hidden="true"></i>
+            onClick={this.onVolumeClick.bind(this)}>
+              <i className={`fa ${volumeIcon}`} aria-hidden="true"></i>
           </button>
         </div>
       </div>
@@ -56,6 +78,16 @@ class VolumeSlider extends React.Component {
 
   onSliderChange(value) {
     const volume = 1 - value
+    let muted = this.state.muted
+
+    if (volume > 0 && muted) {
+      muted = false
+    }
+
+    this.setState({
+      volume,
+      muted
+    })
 
     this.onVolumeChange(volume)
   }
@@ -67,12 +99,17 @@ class VolumeSlider extends React.Component {
   onVolumeMouseOut(event) {
     this.setState({showSlider: false})
   }
-}
 
-/*
-    <i className="fa fa-volume-up" aria-hidden="true"></i>
-    <i className="fa fa-volume-down" aria-hidden="true"></i>
-    <i className="fa fa-volume-off" aria-hidden="true"></i>
-*/
+  onVolumeClick(event) {
+    event.preventDefault()
+
+    const muted = !this.state.muted
+    const volume = this.state.volume
+
+    this.setState({muted})
+    this.onMuteToggle(muted)
+    this.onVolumeChange(muted ? 0 : volume)
+  }
+}
 
 module.exports = VolumeSlider

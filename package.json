@@ -9,6 +9,7 @@
     "watch": "watchify -t [ babelify --presets [ react ] ] components/index.js -o dist/bundle.js",
     "build:ui": "browserify -t [ babelify --presets [ react ] ] components/index.js -o dist/bundle.js",
     "build": "node build.js",
+    "zip": "cd build/Shredbeat-darwin-x64/; zip -r -X shredbeat.zip Shredbeat.app; cd ../..",
     "relink": "npm unlink global-keypress && npm link global-keypress"
   },
   "repository": "https://github.com/miguelmota/shredbeat",
