@@ -112,6 +112,10 @@ class Main extends React.Component {
       })
     })
 
+    shredometerService.setSensitivity(store.get('sensitivity'))
+    shredometerService.setStartingAmplitude(store.get('startingVolume'))
+    shredometerService.setAmplitudeSensitivity(store.get('volumeSensitivity'))
+
     shredometerService.on('ShredProgress', _.throttle(shredProgress => {
       this.setState({shredProgress})
     }, 100))
@@ -126,6 +130,14 @@ class Main extends React.Component {
 
     store.on('sensitivity', _.throttle(value => {
       shredometerService.setSensitivity(value)
+    }, 100))
+
+    store.on('startingVolume', _.throttle(value => {
+      shredometerService.setStartingAmplitude(value)
+    }, 100))
+
+    store.on('volumeSensitivity', _.throttle(value => {
+      shredometerService.setAmplitudeSensitivity(value)
     }, 100))
 
     this.handleError = this.handleError.bind(this)
