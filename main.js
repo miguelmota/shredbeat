@@ -17,6 +17,7 @@ var BrowserWindow = electron.BrowserWindow
 // Native Menu
 var Menu = electron.Menu
 var shell = electron.shell
+var ipcMain = electron.ipcMain
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -103,6 +104,10 @@ if (!isLinux) {
   mb.on('after-hide', onWindowHide)
   mb.on('after-close', onWindowHide)
   mb.on('focus-lost', onWindowHide)
+
+  ipcMain.on('minimize-window', (event, arg) => {
+    mb.hideWindow()
+  })
 }
 
 function onWindowHide() {

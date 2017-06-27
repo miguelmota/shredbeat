@@ -250,11 +250,6 @@ class Main extends React.Component {
     )
   }
 
-/*
-                <i className="fa fa-circle-o-notch" aria-hidden="true"></i>
-                <i className="fa fa-window-minimize" aria-hidden="true"></i>
-                */
-
   onExternalClick(event) {
     event.preventDefault()
     shell.openExternal(event.target.href)

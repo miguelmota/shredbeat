@@ -9,12 +9,13 @@ class ConfigSettings extends React.Component {
     super()
 
     this.state = {
-      sensitivity: ((store.get('sensitivity') || 0.10)*100)|0
+      sensitivity: ((store.get('sensitivity') || 0.10)*100)|0,
+      startingVolume: store.get('startingVolume') || -50
     }
   }
 
   render() {
-    const {sensitivity} = this.state
+    const {sensitivity, startingVolume} = this.state
 
     return (
       <div className="ui grid ConfigSettings" id="ConfigSettings">
@@ -32,8 +33,26 @@ class ConfigSettings extends React.Component {
           onChange={this.onSensitivityChange.bind(this)}
           withBars
           >
-            <div className="handle">
-              <span>{sensitivity}%</span>
+            <div className="handle-label">
+              {sensitivity}%
+            </div>
+          </Slider>
+        </div>
+        <div className="ui field">
+          <label>Starting volume</label>
+
+          <Slider
+          className="SettingRangeSlider"
+          min={-100}
+          step={1}
+          max={0}
+          defaultValue={startingVolume}
+          orientation="horizontal"
+          onChange={this.onStartingVolumeChange.bind(this)}
+          withBars
+          >
+            <div className="handle-label">
+              {startingVolume}%
             </div>
           </Slider>
         </div>
@@ -47,6 +66,11 @@ class ConfigSettings extends React.Component {
 
     store.set('sensitivity', sensitivity)
     this.setState({sensitivity: value})
+  }
+
+  onStartingVolumeChange(startingVolume) {
+    store.set('startingVolume', startingVolume)
+    this.setState({startingVolume})
   }
 }
 

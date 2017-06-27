@@ -157,12 +157,13 @@ body::-webkit-scrollbar-thumb:hover,
 
 .DragRegion {
   -webkit-app-region: drag;
-  height: 10px;
   width: 100%;
   background: rgba(79, 46, 93, 0.45);
   text-align: right;
   color: rgba(255,255,255,0.5);
   font-size: 0.6em;
+  text-align: center;
+  position: relative;
 }
 
 .DragRegion:hover {
@@ -182,10 +183,8 @@ body::-webkit-scrollbar-thumb:hover,
   -webkit-app-region: no-drag;
   position: absolute;
   top: 0;
-  left: 0;
-  text-align: left;
+  right: 0;
   color: rgba(255,255,255,0.5);
-  font-size: 0.6em;
 }
 
 /*
@@ -193,6 +192,37 @@ body::-webkit-scrollbar-thumb:hover,
  */
 
 
+/*
+ * MINIMIZE HANDLE
+ */
+
+.MinimizeHandle {
+  -webkit-app-region: no-drag;
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: rgba(255,255,255,0.5);
+  transition: all 0.2s ease-out;
+  line-height: 1;
+  padding: 0.2em 0.6em;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.MinimizeHandle:hover {
+  color: rgba(255,255,255,0.7);
+}
+
+.MinimizeHandle i {
+  margin-top: -0.3em;
+}
+
+/*
+ * /END MINIMIZE HANDLE
+ */
 
 /*
  * MAIN VIEW
@@ -552,6 +582,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a400f7', end
   color: #ffb5de;
 }
 
+.ConfigSettings .field {
+  margin-bottom: 20px;
+}
+
 /*
  * /END CONFIG SETTINGS
  */
@@ -562,7 +596,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a400f7', end
 
 .SettingRangeSlider {
   width: 100%;
-  height: 50px;
+  height: 2em;
   transition: all 0.2s ease-out;
   border: 1px solid transparent;
 }
@@ -573,23 +607,31 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a400f7', end
 }
 
 .SettingRangeSlider .handle {
-  top: 1px;
-  width: 50px;
-  height: 48px;
-  line-height: 48px;
-  font-size: 0.9em;
+  top: 50%;
+  transform: translate(0, -50%);
+  width: 2.5em;
+  height: 2.5em;
+  line-height: 1;
   text-align: center;
   cursor: pointer;
   background: rgba(0, 0, 0, 0.8);
   color: rgba(255,255,255,0.9)
 }
 
-.SettingRangeSlider .handle span {
+.SettingRangeSlider .handle-label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  font-size: 0.8em;
+  line-height: 1;
   opacity: 0;
+  text-align: center;
   transition: all 0.2s ease-out;
 }
 
-.SettingRangeSlider:hover .handle span {
+.SettingRangeSlider:hover .handle-label {
   opacity: 1
 }
 
@@ -598,10 +640,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a400f7', end
 }
 
 .SettingRangeSlider .bar {
-  position: relative;
-  top: 20px;
-  height: 10px;
+  top: 50%;
+  height: 1em;
   background-color: rgba(255, 58, 158, 0.8);
+  transform: translate(0, -50%);
 }
 
 .SettingRangeSlider .bar.bar-1 {
