@@ -33,7 +33,7 @@
     "watchify": "^3.9.0"
   },
   "dependencies": {
-    "audio-director": "0.0.6",
+    "audio-director": "0.0.7",
     "d3": "^4.8.0",
     "electron": "^1.6.6",
     "electron-context-menu": "^0.9.1",
