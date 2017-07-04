@@ -1,12 +1,12 @@
 # shredbeat
 
-> Music beat reacts to [keyboard shredding](https://www.urbandictionary.com/define.php?term=keyboard%20shredding) speed.
+> Music beat reacts to your [keyboard shredding](https://www.urbandictionary.com/define.php?term=keyboard%20shredding) speed 🤘
 
-<img src="https://github.com/miguelmota/shredbeat/blob/master/screenshot.png?raw=true" width="400">
+<img src="https://github.com/miguelmota/shredbeat/blob/master/screenshot.png?raw=true" width="500">
 
 [https://shredbeat.com](https://shredbeat.com)
 
-Note: this is an MVP
+Note: this is a WIP
 
 ## Supported platforms
 

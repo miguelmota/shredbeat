@@ -1,8 +1,11 @@
 {
   "name": "shredbeat",
   "version": "0.0.1",
-  "description": "Music beat reacts to keyboard shredding speed",
+  "description": "Music beat reacts to your keyboard shredding speed 🤘",
   "main": "main.js",
+  "bin": {
+    "shredbeat": "./bin/shredbeat.js"
+  },
   "scripts": {
     "start": "electron .",
     "start:dev": "NODE_ENV=development electron .",
