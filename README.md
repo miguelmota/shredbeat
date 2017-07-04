@@ -60,6 +60,18 @@ Download stable release for Mac OS X
 Go to [Releases](https://github.com/miguelmota/shredbeat/releases) page to download latest build.
 -->
 
+also available on NPM
+
+```bash
+npm install -g shredbeat
+```
+
+Run
+
+```bash
+shredbeat
+```
+
 ## Resources
 
 - [electron](http://electron.atom.io)

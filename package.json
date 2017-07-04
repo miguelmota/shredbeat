@@ -1,6 +1,6 @@
 {
   "name": "shredbeat",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Music beat reacts to your keyboard shredding speed 🤘",
   "main": "main.js",
   "bin": {

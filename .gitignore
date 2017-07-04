@@ -21,7 +21,6 @@ npm-debug.log
 *.dmg
 build
 example
-dist
 shredbeat-darwin-x64
 shredbeat-linux-x64
 webrtc
