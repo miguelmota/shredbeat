@@ -75,3 +75,7 @@ shredbeat
 ## Resources
 
 - [electron](http://electron.atom.io)
+
+# License
+
+MIT

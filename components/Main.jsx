@@ -9,10 +9,13 @@ const musicService = require('../lib/musicService')
 const shredometerService = require('../lib/shredometerService')
 const store = require('../lib/storeService')
 const player = require('../lib/playerService')
+const PlayerEventTypes = player.EventTypes
 
 const Shredometer = require('./Shredometer.jsx')
 const ConfigSettings = require('./ConfigSettings.jsx')
-const Player = require('./Player.jsx')
+const PlayerComponent = require('./Player.jsx')
+
+window.player = player
 
 class Main extends React.Component {
   constructor(props) {
@@ -37,7 +40,13 @@ class Main extends React.Component {
       isFetchingPlaylist: false
     }
 
-    player.on('EmptyQueue', () => {
+    player.on(_.throttle((event, value) => {
+      if (event !== PlayerEventTypes.LOG) {
+        console.log(player.toJSON())
+      }
+    }, 200))
+
+    player.on(PlayerEventTypes.EMPTY_QUEUE, () => {
       this.setState({
         playButtonDisabled: true,
         stopButtonDisabled: true,
@@ -48,67 +57,49 @@ class Main extends React.Component {
       })
     })
 
-    player.on('Enqueue', () => {
+    player.on(PlayerEventTypes.ENQUEUE, () => {
       this.setState({playButtonDisabled: false})
 
-      player.hasPrevious()
-      .then(hasPrevious => {
-        this.setState({
-          previousButtonDisabled: !hasPrevious
-        })
+      this.setState({
+        previousButtonDisabled: !player.hasPrevious()
       })
 
-      player.hasNext()
-      .then(hasNext => {
-        this.setState({
-          nextButtonDisabled: !hasNext
-        })
+      this.setState({
+        nextButtonDisabled: !player.hasNext()
       })
     })
 
-    player.on('Play', () => {
+    player.on(PlayerEventTypes.PLAY, () => {
       this.setState({
         playButtonDisabled: true,
         stopButtonDisabled: false
       })
     })
 
-    player.on('Stop', () => {
+    player.on(PlayerEventTypes.STOP, () => {
       this.setState({
         playButtonDisabled: false,
         stopButtonDisabled: true
       })
     })
 
-    player.on('Previous', () => {
-      player.hasPrevious()
-      .then(hasPrevious => {
-        this.setState({
-          previousButtonDisabled: !hasPrevious
-        })
+    player.on(PlayerEventTypes.PREVIOUS, () => {
+      this.setState({
+        previousButtonDisabled: !player.hasPrevious()
       })
 
-      player.hasNext()
-      .then(hasNext => {
-        this.setState({
-          nextButtonDisabled: !hasNext
-        })
+      this.setState({
+        nextButtonDisabled: !player.hasNext()
       })
     })
 
-    player.on('Next', () => {
-      player.hasPrevious()
-      .then(hasPrevious => {
-        this.setState({
-          previousButtonDisabled: !hasPrevious
-        })
+    player.on(PlayerEventTypes.NEXT, () => {
+      this.setState({
+        previousButtonDisabled: !player.hasPrevious()
       })
 
-      player.hasNext()
-      .then(hasNext => {
-        this.setState({
-          nextButtonDisabled: !hasNext
-        })
+      this.setState({
+        nextButtonDisabled: !player.hasNext()
       })
     })
 
@@ -223,7 +214,7 @@ class Main extends React.Component {
             </div>
           </form>
           <div className="PlayerContainer">
-            <Player
+            <PlayerComponent
               playButtonDisabled={playButtonDisabled}
               pauseButtonDisabled={stopButtonDisabled}
               stopButtonDisabled={stopButtonDisabled}

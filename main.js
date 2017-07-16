@@ -68,8 +68,13 @@ require('electron-context-menu')({
 function onReady() {
   debug('app ready')
 
-  var windowShortcutKey = 'Command+S';
+  var windowShortcutKey = 'Option+Command+M';
   var ret = globalShortcut.register(windowShortcutKey, () => {
+    if (mb.window.isVisible()) {
+      mb.hideWindow()
+    } else {
+      mb.showWindow()
+    }
     debug(windowShortcutKey, 'is pressed')
   })
 
