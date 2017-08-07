@@ -5,20 +5,78 @@ const _ = require('lodash')
 // https://github.com/electron/electron/issues/7300
 const {remote, shell} = window.require('electron')
 
+const ws = require('../lib/websocketService')
 const musicService = require('../lib/musicService')
 const shredometerService = require('../lib/shredometerService')
 const store = require('../lib/storeService')
-const player = require('../lib/playerService')
+const Player = require('../lib/PlayerService')
+
+const player = new Player()
 const PlayerEventTypes = player.EventTypes
+
+const peerPlayer = new Player()
+
+var lastUrl = null
+var lastState = null
+var lastMaxVolume = null
+var lastVolume = null
+var lastPlaybackRate = null
+
+ws.onPeerUpdate((data) => {
+  const {
+    currentTime,
+    maxVolume,
+    volume,
+    playbackRate,
+    url,
+    currentState
+  } = data
+
+  if (lastUrl !== url) {
+    peerPlayer.setPlaylist(url)
+    peerPlayer.play()
+
+    lastUrl = url
+  }
+
+  if (lastState !== currentState) {
+    if (peerPlayer.isReady()) {
+      if (currentState === 'playing') {
+        peerPlayer.seekTo(currentTime)
+        peerPlayer.play()
+      } else if (currentState === 'paused') {
+        peerPlayer.pause()
+      }
+
+      lastState = currentState
+    }
+  }
+
+  if (lastMaxVolume !== maxVolume) {
+    peerPlayer.setMaxVolume(maxVolume)
+    lastMaxVolume = maxVolume
+  }
+
+  if (lastVolume !== volume) {
+    peerPlayer.setVolume(volume)
+    lastVolume = volume
+  }
+
+  if (lastPlaybackRate !== playbackRate) {
+    peerPlayer.setPlaybackRate(playbackRate)
+    lastPlaybackRate = playbackRate
+  }
+})
 
 const Shredometer = require('./Shredometer.jsx')
 const ConfigSettings = require('./ConfigSettings.jsx')
 const PlayerComponent = require('./Player.jsx')
 
 window.player = player
+window.peerPlayer = peerPlayer
 
 class Main extends React.Component {
-  constructor(props) {
+  constructor (props) {
     super(props)
 
     this.state = {
@@ -42,7 +100,12 @@ class Main extends React.Component {
 
     player.on(_.throttle((event, value) => {
       if (event !== PlayerEventTypes.LOG) {
-        console.log(player.toJSON())
+        const json = player.toJSON()
+        console.log(json)
+
+        if (ws.isOpen()) {
+          ws.send('update', json)
+        }
       }
     }, 200))
 
